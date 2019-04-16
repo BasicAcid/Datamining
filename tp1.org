@@ -1,0 +1,145 @@
+#+PROPERTY: R :cmd "/usr/bin/R"
+
+* Commandes basiques
+** Initialisation d'un vecteur u contenant 5 répétitions d'un vecteur v quelconque
+   ex : si v vaut 54, 12, 35 alors u vaudra 54, 12, 35, 54, 12, 35, 54, 12, 35, 54, 12, 35, 54, 12, 35
+
+#+BEGIN_SRC R
+v <- c(54, 12, 35)
+u <- rep(v ,5)
+#+END_SRC
+
+#+RESULTS:
+| 54 |
+| 12 |
+| 35 |
+| 54 |
+| 12 |
+| 35 |
+| 54 |
+| 12 |
+| 35 |
+| 54 |
+| 12 |
+| 35 |
+| 54 |
+| 12 |
+| 35 |
+
+** Initialisation d'un vecteur u contenant 5 répétitions d'un vecteur v quelconque sans la dernière valeur
+   ex : si v vaut 54, 12, 35 alors u vaudra 54, 12, 35, 54, 12, 35, 54, 12, 35, 54, 12, 35, 54, 12
+
+#+BEGIN_SRC R :cmd "/usr/bin/R"
+v <- c(54, 12, 35)
+u <- rep(v ,5)
+u <- u[-length(u)]
+#+END_SRC
+
+#+RESULTS:
+| 54 |
+| 12 |
+| 35 |
+| 54 |
+| 12 |
+| 35 |
+| 54 |
+| 12 |
+| 35 |
+| 54 |
+| 12 |
+| 35 |
+| 54 |
+| 12 |
+
+    
+** Initialisation d'un vecteur u de booléens contenant TRUE ou FALSE selon que la valeur correspondante du vecteur v est positive ou non
+   ex : si v vaut -54, 12, 0, -35 alors u vaudra F, T, T, F
+
+#+BEGIN_SRC R
+v <- c(-54, 12, 0, -35)
+u <- c(v >= 0)
+#+END_SRC
+
+#+RESULTS:
+| FALSE |
+| TRUE  |
+| TRUE  |
+| FALSE |
+
+** Initialisation d'un vecteur u contenant les indices des valeurs positives d'un vecteur v quelconque
+   ex : si v vaut -54, 12, 0, -35 alors u vaudra 2, 3
+
+#+BEGIN_SRC R
+v <- c(-54, 12, 0, -35)
+u <- c(which(v >= 0))
+#+END_SRC
+
+#+RESULTS:
+| 2 |
+| 3 |
+
+** Initialisation d'un vecteur u contenant les nombres paires d'un vecteur v quelconque
+   ex : si v vaut 54, 12, 35 alors u vaudra 54, 12
+
+#+BEGIN_SRC R
+v <- c(54, 12, 35)
+u <- c(v[v %% 2 == 0])
+#+END_SRC
+
+#+RESULTS:
+| 54 |
+| 12 |
+
+** Initialisation d'un vecteur u contenant les valeurs TTC arrondis de prix contenus dans un vecteur v quelconque de prix HT
+   ex : si 54.99, 12.41, 35.14 alors u vaudra 65.99, 14.89, 42.17
+
+#+BEGIN_SRC R
+v <- c(54.99, 12.41, 35.14)
+u <- round(c(1.2 * v), digits=2)
+#+END_SRC
+
+#+RESULTS:
+| 65.99 |
+| 14.89 |
+| 42.17 |
+
+** Initialisation d'un vecteur u contenant le contenu d'un vecteur v incrémenté à 100, 200, 300, ..., 9900
+   ex : si v vaut 54, 12, 35 alors u vaudra 54, 12, 35, 154, 112, 135, ... 9954, 9912, 9935
+
+#+BEGIN_SRC R
+v <- c(54, 12, 35) 
+u <- v+100
+#+END_SRC
+
+#+RESULTS:
+| 354 |
+| 312 |
+| 335 |
+
+* Chaînes de caractères
+** Initialisation d'un vecteur u contenant les chaînes de plus de 10 caractères d'un vecteur v de chaînes
+   Initialisation d'un vecteur u contenant les chaînes d'un vecteur v quelconque qui contiennent un email (présence d'...@...)
+   
+#+BEGIN_SRC R
+v <- c("doudou@mondoudou.doudou", 'm@cron.io', 'krishtenbatwo@ichnayrchwo.long', 'l@b.x', 'tititoto@foobar.qmsldfkj')
+u <- c(which(nchar(v) > 10))
+#+END_SRC
+
+#+RESULTS:
+| 1 |
+| 3 |
+| 5 |
+
+** Initialisation d'un vecteur u avec une version tronquée des chaînes de plus de 10 caractères d'un vecteur v, et leur ajouter "..."
+#+BEGIN_SRC R
+v <- c("doudou@mondoudou.doudou", 'm@cron.io', 'krishtenbatwo@ichnayrchwo.long', 'l@b.x', 'tititoto@foobar.qmsldfkj')
+u <- substring(v[1], 1, 10)
+#+END_SRC
+
+#+RESULTS:
+: doudou@mon
+
+* Dates
+** Initialisation d'un vecteur u avec les lundis de 2018
+** Initialisation d'un vecteur u avec les 5, 12 et 24 de chaque mois de 2018
+** Initialisation d'un vecteur u avec les dates ne tombant pas un week-end d'un vecteur v de dates quelconques
