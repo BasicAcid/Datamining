@@ -1,3 +1,9 @@
+#+TITLE:     Datamining tp1
+#+AUTHOR:    David Tabarie
+#+LANGUAGE:  fr
+#+LaTeX_CLASS: article
+#+STARTUP: showall
+
 #+PROPERTY: R :cmd "/usr/bin/R"
 
 * Commandes basiques
@@ -51,7 +57,7 @@ u <- u[-length(u)]
 | 54 |
 | 12 |
 
-    
+
 ** Initialisation d'un vecteur u de booléens contenant TRUE ou FALSE selon que la valeur correspondante du vecteur v est positive ou non
    ex : si v vaut -54, 12, 0, -35 alors u vaudra F, T, T, F
 
@@ -107,7 +113,7 @@ u <- round(c(1.2 * v), digits=2)
    ex : si v vaut 54, 12, 35 alors u vaudra 54, 12, 35, 154, 112, 135, ... 9954, 9912, 9935
 
 #+BEGIN_SRC R
-v <- c(54, 12, 35) 
+v <- c(54, 12, 35)
 u <- v+100
 #+END_SRC
 
@@ -118,11 +124,9 @@ u <- v+100
 
 * Chaînes de caractères
 ** Initialisation d'un vecteur u contenant les chaînes de plus de 10 caractères d'un vecteur v de chaînes
-   Initialisation d'un vecteur u contenant les chaînes d'un vecteur v quelconque qui contiennent un email (présence d'...@...)
-   
 #+BEGIN_SRC R
-v <- c("doudou@mondoudou.doudou", 'm@cron.io', 'krishtenbatwo@ichnayrchwo.long', 'l@b.x', 'tititoto@foobar.qmsldfkj')
-u <- c(which(nchar(v) > 10))
+v <- c("doudou@mondoudou.doudou", 'm@cron.io', 'krishtenbatwo@ichnayrchwo.long', 'l@b.x', 'tititoto@foobar.qmsldfkj', 'notamail')
+u <- which(nchar(v) > 10)
 #+END_SRC
 
 #+RESULTS:
@@ -130,16 +134,78 @@ u <- c(which(nchar(v) > 10))
 | 3 |
 | 5 |
 
-** Initialisation d'un vecteur u avec une version tronquée des chaînes de plus de 10 caractères d'un vecteur v, et leur ajouter "..."
+** Initialisation d'un vecteur u contenant les chaînes d'un vecteur v quelconque qui contiennent un email (présence d'...@...)
 #+BEGIN_SRC R
-v <- c("doudou@mondoudou.doudou", 'm@cron.io', 'krishtenbatwo@ichnayrchwo.long', 'l@b.x', 'tititoto@foobar.qmsldfkj')
-u <- substring(v[1], 1, 10)
+v <- c("doudou@mondoudou.doudou", 'm@cron.io', 'krishtenbatwo@ichnayrchwo.long', 'l@b.x', 'tititoto@foobar.qmsldfkj', 'notamail')
+u <- v[grep("@", v)]
 #+END_SRC
 
 #+RESULTS:
-: doudou@mon
+| doudou@mondoudou.doudou        |
+| m@cron.io                      |
+| krishtenbatwo@ichnayrchwo.long |
+| l@b.x                          |
+| tititoto@foobar.qmsldfkj       |
+
+** Initialisation d'un vecteur u avec une version tronquée des chaînes de plus de 10 caractères d'un vecteur v, et leur ajouter "..."
+#+BEGIN_SRC R
+v <- c("doudou@mondoudou.doudou", 'm@cron.io', 'krishtenbatwo@ichnayrchwo.long', 'l@b.x', 'tititoto@foobar.qmsldfkj', 'notamail')
+u <- paste(substring(v, 1, 10), "...", sep="")
+#+END_SRC
+
+#+RESULTS:
+| doudou@mon... |
+| m@cron.io...  |
+| krishtenba... |
+| l@b.x...      |
+| tititoto@f... |
+| notamail...   |
 
 * Dates
 ** Initialisation d'un vecteur u avec les lundis de 2018
+#+BEGIN_SRC R
+v <- c(5, 12, 24)
+u <- as.Date(paste("2018/", rep(1:12, each=length(v)), "/", v, sep=""))
+#+END_SRC
+
+#+RESULTS:
+| 2018-01-05 |
+| 2018-01-12 |
+| 2018-01-24 |
+| 2018-02-05 |
+| 2018-02-12 |
+| 2018-02-24 |
+| 2018-03-05 |
+| 2018-03-12 |
+| 2018-03-24 |
+| 2018-04-05 |
+| 2018-04-12 |
+| 2018-04-24 |
+| 2018-05-05 |
+| 2018-05-12 |
+| 2018-05-24 |
+| 2018-06-05 |
+| 2018-06-12 |
+| 2018-06-24 |
+| 2018-07-05 |
+| 2018-07-12 |
+| 2018-07-24 |
+| 2018-08-05 |
+| 2018-08-12 |
+| 2018-08-24 |
+| 2018-09-05 |
+| 2018-09-12 |
+| 2018-09-24 |
+| 2018-10-05 |
+| 2018-10-12 |
+| 2018-10-24 |
+| 2018-11-05 |
+| 2018-11-12 |
+| 2018-11-24 |
+| 2018-12-05 |
+| 2018-12-12 |
+| 2018-12-24 |
+
 ** Initialisation d'un vecteur u avec les 5, 12 et 24 de chaque mois de 2018
+
 ** Initialisation d'un vecteur u avec les dates ne tombant pas un week-end d'un vecteur v de dates quelconques

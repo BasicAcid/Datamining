@@ -1,0 +1,57 @@
+#+TITLE:     Datamining tp3
+#+AUTHOR:    David Tabarie
+#+LANGUAGE:  fr
+#+LaTeX_CLASS: article
+#+STARTUP: showall
+
+#+PROPERTY: R :cmd "/usr/bin/R"
+
+* Sujet
+Le but du TP est de mettre en œuvre les régressions vues en cours sur
+le jeu de données AirPassenger et d'effectuer une prédiction basée sur
+chacun des modèles.
+
+Vous devez effectuer les tâches suivantes :
+- Convertir le jeu de données en dataframe et ajouter une colonne mois
+- Générer les modèles du jeu pour les algorithmes de :
+  - Régression linéaire univariée
+  - Régression linéaire multivariée
+  - SVM
+- Prédire les passagers sur mai 62 pour chaque modèle
+
+#+NAME: add_months
+#+BEGIN_SRC R
+df <- data.frame(AirPassengers, year = substring(time(AirPassengers),1,4), month = month.abb[cycle(AirPassengers)])
+#+END_SRC
+
+#+NAME: univar_linear_regression
+#+BEGIN_SRC R :var df=add_months
+modele <- lm(AirPassengers~time(AirPassengers), df)
+plot(modele)
+#+END_SRC
+
+#+BEGIN_SRC R :exports both :results graphics :file regression_linéaire_univariée.png :var modele=univar_linear_regression
+modele <- lm(AirPassengers~time(AirPassengers), df)
+predict(modele, df)
+#+END_SRC
+
+#+NAME: multivar_linear_regression
+#+BEGIN_SRC R :exports both :results graphics :file regression_linéaire_multivariée.png :var df=add_months
+modele <- lm(AirPassengers~year+month, df)
+plot(modele)
+#+END_SRC
+
+#+NAME: svm
+#+BEGIN_SRC R :exports both :results graphics :file svm.png :var df=add_months
+library(e1071)
+modele <- svm(AirPassengers~month, df)
+plot(modele)
+#predict(model, data.frame)
+#+END_SRC
+
+** Livrable
+PDF contenant :
+- Le code R de préparation du jeu de données
+- Le code R de création des modèles pour chaque algorithme
+- Le "summary" de chaque modèle
+- Les prédictions avec erreur pour mai 62
